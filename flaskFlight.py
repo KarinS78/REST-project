@@ -14,7 +14,7 @@ def form():
 def flights_page():
     # request for all the flights
     if request.method == 'GET':
-        return flights.print_fli()
+        return flights.print_fli('WHERE remaining_seats > 0)
     # request to create a new flight
     if request.method == 'POST':
         flight_id = request.form['id']
