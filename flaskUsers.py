@@ -14,7 +14,9 @@ def form():
 def users_page():
     # request for all the users
     if request.method == 'GET':
-        print(users.print_users())
+        password = request.form['psw']
+        real_id = request.form['id']
+        print(users.print_users(f'WHERE real_id = {real_id} AND password = {password}'))
         return render_template('theTicketSite.html')
     # request to create a new user
     if request.method == 'POST':
@@ -22,7 +24,7 @@ def users_page():
         password = request.form['psw']
         real_id = request.form['id']
         user = users.Users(0, full_name, password, real_id)
-        users.insert_user(user)
+        print(users.insert_user(user))
         return render_template('theTicketSite.html')
 
 
