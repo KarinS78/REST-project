@@ -1,5 +1,6 @@
 from flask import Flask
 import tickets
+import flights
 from flask import render_template, request, redirect, url_for
 
 app = Flask(__name__)
@@ -17,6 +18,7 @@ def tickets_page():
         return tickets.print_tic()
     # request to create a new ticket
     if request.method == 'POST':
+        print(flights.print_fli('WHERE remaining_seats > 0'))
         ticket_id = request.form['ticket id']
         flight_id = request.form['flight id']
         user_id = request.form['user id']
@@ -24,14 +26,14 @@ def tickets_page():
         return tickets.insert_tic(ticket)
 
 
-@app.route('/tickets/<int:ticket_id>', methods=['GET', 'DELETE'])
-def ticket_g_d(ticket_id):
-    # request of a specific ticket
+@app.route('/tickets/<int:id>', methods=['GET', 'DELETE'])
+def ticket_g_d(id):
+    # request of a tickets of a specific user.
     if request.method == 'GET':
-        return tickets.print_tic(f'WHERE ticket_id = {ticket_id}')
+        return tickets.print_tic(f'WHERE user_id = {id}')
     # request to delete a ticket according to a given id
     if request.method == 'DELETE':
-        return tickets.delete_tic(ticket_id)
+        return tickets.delete_tic(id)
 
 
 app.run()
